@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./fonts/fonts.css" />
+  </head>
+  <body class="bg-light" onload='add("OS")'>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#"
+          ><img class="logo" src="big-logo-light.svg"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="menu">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link links" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link links" href="#">Apps</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link links" href="#">API</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link links" href="#">Contact</a>
+              </li>
+            </ul>
+
+            <button class="login">Send Feedback</button>
+          </div>
+        </div>
+      </nav>
+
+      <section class="search-bar">
+        <div class="form">
+          <label class="form-label" id="TextChanger">Your OS is &nbsp;</label>
+          <label class="form-label" id="searchField"> </label>
+          <label id="relatedModels"> </label>
+          <span class="form-para" id="ESC"></span>
+          <div class="speak" id="SPEAK">
+            <i
+              class="fa fa-microphone"
+              aria-hidden="true"
+              style="color: white !important"
+            ></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="trending">
+        <p class="trending-heading">Detect My</p>
+        <div class="trending-data" style="flex-wrap: wrap">
+          <div class="trending-box" onclick='add("OS")' id="os">
+            Operating System
+          </div>
+          <div class="trending-box" onclick='add("Browser")' id="browser">
+            Browser Version
+          </div>
+          <div class="trending-box" onclick='add("Model")' id="model">
+            Device Model
+          </div>
+          <div class="trending-box" onclick='add("Device type")' id="device">
+            Device type
+          </div>
+        </div>
+      </section>
+      <section class="badge">
+        <div class="welcome-badge" id="W-Badge">
+          <div class="row">
+            <div class="col-2">
+              <img src="notification-icon.svg" class="badge-image" />
+            </div>
+            <div class="col-10" style="padding-left: 20px">
+              <div class="welcome-txt">
+                Welcome to TechSpecs Detection
+                <i
+                  class="fa fa-times-circle x-icon"
+                  aria-hidden="true"
+                  onclick="changeStyle()"
+                  id="close-icon"
+                ></i>
+              </div>
+              <div class="description">
+                Use our search engine to find and compare the detailed specs of
+                any consumer electronics device in the world
+              </div>
+
+              <p class="try">Try now!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </body>
+</html>
+
+<!-- javascript -->
+
+<script type="text/javascript">
+  function changeStyle() {
+    document.getElementById("W-Badge").style.transform = "translateX(-200%)";
+    sessionStorage.setItem("close", 1);
+  }
+  // clear search field on esc
+  window.onkeyup = function (event) {
+    if (event.keyCode == 27) {
+      add("");
+      document.getElementById("searchField").innerHTML = "";
+    }
+  };
+
+  // API call
+  var relatedModels = [];
+  function add(keywords) {
+    if (sessionStorage.getItem("user") == null) {
+      sessionStorage.setItem("user", 1);
+    } else {
+      if (sessionStorage.getItem("close") != null) {
+        document.getElementById("W-Badge").style.transform =
+          "translateX(-200%)";
+      }
+    }
+    if (keywords == "Model") {
+      document.getElementById("TextChanger").innerHTML = "Your Model is &nbsp;";
+      var m = document.getElementById("model");
+      m.classList.add("button-active");
+      var o = document.getElementById("os");
+      o.classList.remove("button-active");
+      var b = document.getElementById("browser");
+      b.classList.remove("button-active");
+      var d = document.getElementById("device");
+      d.classList.remove("button-active");
+    } else if (keywords == "OS") {
+      document.getElementById("TextChanger").innerHTML = "Your OS is &nbsp;";
+      var m = document.getElementById("model");
+      m.classList.remove("button-active");
+      var o = document.getElementById("os");
+      o.classList.add("button-active");
+      var b = document.getElementById("browser");
+      b.classList.remove("button-active");
+      var d = document.getElementById("device");
+      d.classList.remove("button-active");
+    } else if (keywords == "Browser") {
+      document.getElementById("TextChanger").innerHTML =
+        "Your Browser Name is &nbsp;";
+      var m = document.getElementById("model");
+      m.classList.remove("button-active");
+      var o = document.getElementById("os");
+      o.classList.remove("button-active");
+      var b = document.getElementById("browser");
+      b.classList.add("button-active");
+      var d = document.getElementById("device");
+      d.classList.remove("button-active");
+    } else if (keywords == "Device type") {
+      document.getElementById("TextChanger").innerHTML =
+        "Your device type is &nbsp;";
+      var m = document.getElementById("model");
+      m.classList.remove("button-active");
+      var o = document.getElementById("os");
+      o.classList.remove("button-active");
+      var b = document.getElementById("browser");
+      b.classList.remove("button-active");
+      var d = document.getElementById("device");
+      d.classList.add("button-active");
+    }
+    var speak = document.getElementById("SPEAK");
+    var para = document.getElementById("ESC");
+    if (keywords == "") {
+      para.style.display = "none";
+      speak.style.display = "flex";
+    } else {
+      para.style.display = "flex";
+      speak.style.display = "none";
+    }
+    let agent = navigator.userAgent;
+    let model = "";
+    let osName = "";
+    let osVersion = "";
+    let browserName = "";
+    let browserVersion = "";
+    let device = "";
+    let url = "";
+    document.getElementById("searchField").innerHTML = "Searching...";
+    if (keywords === "Model") {
+      url =
+        "https://apis.dashboard.techspecs.io/paoekj35e25vtep9/model?" +
+        new URLSearchParams({
+          q: agent,
+        });
+      (async () => {
+        const rawResponse = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-BLOBR-KEY": "EAJIGl4C5ZQTkohu8DNlQoXCYCWGNP42",
+          },
+        });
+        let content = await rawResponse.json();
+        if (content.device !== null) {
+          model = content.device.model;
+        }
+        // if (content !== null) {
+        let dimensions = screen.width + "x" + screen.height;
+        url =
+          "https://v9ey6rfuch.execute-api.us-west-1.amazonaws.com/default/ScreenResolutionAPI?" +
+          new URLSearchParams({
+            q: "1136x640",
+          });
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.onreadystatechange = (res) => {
+          if (xhr.readyState === 4) {
+            if ("withCredentials" in xhr) {
+              // make cross-site requests
+              let data = JSON.parse(xhr.response);
+              const regex = new RegExp("\\b" + model + "\\b", "gi");
+              for (let i = 0; i < data.length; i++) {
+                let m;
+                while ((m = regex.exec(data[i].model)) !== null) {
+                  if (m.index === regex.lastIndex) {
+                    regex.lastIndex++;
+                  }
+                  relatedModels.push(m.input);
+                }
+              }
+            }
+          }
+        };
+        xhr.send();
+        // }
+        let rel = "<span> Possible devices: </span>";
+        if (relatedModels.length > 0) {
+          for (let i = 0; i < relatedModels.length; i++) {
+            rel = rel + relatedModels[i];
+            if (relatedModels[i + 1] == null) {
+              break;
+            }
+            rel = rel + "<span> or </span>";
+          }
+        }else{
+          rel = "";
+        }
+        document.getElementById("relatedModels").innerHTML = rel;
+        document.getElementById("searchField").innerHTML = model;
+      })();
+    } else if (keywords === "OS") {
+      url =
+        "https://apis.dashboard.techspecs.io/paoekj35e25vtep9/os?" +
+        new URLSearchParams({
+          q: agent,
+        });
+      (async () => {
+        const rawResponse = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-BLOBR-KEY": "EAJIGl4C5ZQTkohu8DNlQoXCYCWGNP42",
+          },
+        });
+        let content = await rawResponse.json();
+        osName = content.os.name;
+        osVersion = content.os.version;
+        document.getElementById("searchField").innerHTML =
+          osName + " " + osVersion;
+      })();
+    } else if (keywords === "Browser") {
+      url =
+        "https://apis.dashboard.techspecs.io/paoekj35e25vtep9/browser?" +
+        new URLSearchParams({
+          q: agent,
+        });
+      (async () => {
+        const rawResponse = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-BLOBR-KEY": "EAJIGl4C5ZQTkohu8DNlQoXCYCWGNP42",
+          },
+        });
+        let content = await rawResponse.json();
+        browserName = content.browser.name;
+        browserVersion = content.browser.version;
+        document.getElementById("searchField").innerHTML =
+          browserName + " " + browserVersion;
+      })();
+    } else if (keywords === "Device type") {
+      url =
+        "https://apis.dashboard.techspecs.io/paoekj35e25vtep9/type?" +
+        new URLSearchParams({
+          q: agent,
+        });
+      (async () => {
+        const rawResponse = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-BLOBR-KEY": "EAJIGl4C5ZQTkohu8DNlQoXCYCWGNP42",
+          },
+        });
+        let content = await rawResponse.json();
+        device = content.device.type;
+        document.getElementById("searchField").innerHTML = device;
+      })();
+    }
+  }
+</script>
